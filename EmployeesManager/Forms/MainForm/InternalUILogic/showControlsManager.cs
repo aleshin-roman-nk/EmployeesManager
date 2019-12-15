@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace EmployeesManager.Forms.MainForm.InternalUILogic
 {
-	class showControlsManager
+	class ShowControlsManager
 	{
 		List<Control> controls = new List<Control>();
 
