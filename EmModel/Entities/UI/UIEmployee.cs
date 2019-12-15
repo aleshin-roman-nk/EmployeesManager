@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//8900 054 4590 тел Игнатова Саши
 namespace EmModel.Entities.UI
 {
 	public class UIEmployee

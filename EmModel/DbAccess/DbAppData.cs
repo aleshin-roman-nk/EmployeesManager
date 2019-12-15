@@ -10,7 +10,7 @@ namespace EmModel.DbAccess
 {
 	public class DbAppData : DbContext
 	{
-		public DbAppData(string cn = @"Data Source = ..\db\data.db") : base(cn)
+		public DbAppData(string cn = @"Data Source = ..\..\db\data.db") : base(cn)
 		//public DbAppData(string cn = @"Data Source = data.db") : base(cn)
 		{
 
