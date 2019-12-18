@@ -54,8 +54,7 @@ using System.Windows.Forms;
  *		|->WorkDocuments
  *			|->Works
  * 
- * При при нажатии "вход в объект" запросить этот объект, со всем содержимым объекта, но только без под уровней
- * 
+ * При нажатии "вход в объект" запросить этот объект, со всем содержимым объекта, но только без под уровней
  * 
  * Находимся на уровне Years
  *	Нажатие войти в Year
@@ -198,7 +197,7 @@ namespace EmployeesManager
 			//		в случае веб реализации, структура текущих данных должна находиться во view
 			//			либо можно создать класс данных, относящихся к ui и находиться будет в view как логика ui
 
-
+			
 
 			gridMain.Columns.Clear();
 			LevelChanged?.Invoke(Level.Months);
@@ -213,7 +212,6 @@ namespace EmployeesManager
 			};
 
 			gridMain.Columns.Add(col1);
-
 			gridMain.DataSource = bsMainGridMonths;
 
 			showControlsManager.Show(monthsPanel);
