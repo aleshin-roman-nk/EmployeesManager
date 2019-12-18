@@ -45,6 +45,25 @@ using System.Windows.Forms;
  *	1. Исходное состояние. 
  * 
  * 
+ * >>>
+ * 18-12-2019
+ * Менять всю картину а не поотдельности. Т.е. менять вид комплексно.
+ * 
+ * root (Years)
+ * |->Months
+ *		|->WorkDocuments
+ *			|->Works
+ * 
+ * При при нажатии "вход в объект" запросить этот объект, со всем содержимым объекта, но только без под уровней
+ * 
+ * 
+ * Находимся на уровне Years
+ *	Нажатие войти в Year
+ *	0. Сохранить какой текущий год
+ *	1. Запрос получить месяцы года
+ *	2. Биндинг коллекции месяцев
+ *	3. Включить панель месяца
+ * 
  */
 
 namespace EmployeesManager
@@ -58,6 +77,7 @@ namespace EmployeesManager
 
 		ActionsNavigator navigator = new ActionsNavigator();
 		ShowControlsManager showControlsManager = new ShowControlsManager();
+		CurrentObjects currentObjects = new CurrentObjects();
 
 		public event Action UserCreatesYear;
 		public event Action<Year> YearSelected;
@@ -76,10 +96,10 @@ namespace EmployeesManager
 			gridMain.AutoGenerateColumns = false;
 			gridMain.DataSource = bsMainGrid;
 
-			navigator.Add(navYears);
-			navigator.Add(navMonths);
-			navigator.Add(navWorkDocuments);
-			navigator.Add(navWorks);
+			navigator.Add(setYears);
+			navigator.Add(setMonths);
+			navigator.Add(setWorkDocuments);
+			navigator.Add(setWorks);
 			navigator.ExecCurrent();
 
 			bsMainGridYears.CurrentItemChanged += BsMainGridYears_CurrentItemChanged;
@@ -88,11 +108,9 @@ namespace EmployeesManager
 
 		public void SetEmployees(IEnumerable<UIEmployee> list)
 		{
-			bsMainGrid.DataSource = typeof(UIEmployee);
-			gridMain.AutoGenerateColumns = false;
-			gridMain.DataSource = bsMainGrid;
-
 			bsMainGrid.DataSource = list;
+			bsMainGrid.DataSource = typeof(UIEmployee);
+			gridMain.DataSource = bsMainGrid;
 			bsMainGrid.ResetBindings(false);
 
 			bsAddress.DataSource = bsMainGrid;
@@ -101,7 +119,6 @@ namespace EmployeesManager
 			txtBuilding.DataBindings.Clear();
 			txtStreet.DataBindings.Clear();
 			txtFIO.DataBindings.Clear();
-
 			txtBuilding.DataBindings.Add("Text", bsAddress, "Building");
 			txtStreet.DataBindings.Add("Text", bsAddress, "Street");
 			txtFIO.DataBindings.Add("Text", bsMainGrid, "ShortName");
@@ -143,13 +160,14 @@ namespace EmployeesManager
 		 * Код выполняется, когда происходит вход в режим просмотра годов.
 		 *	Сетка конфигурирется для показа годов
 		 */
-		private void navYears()
+		private void setYears()
 		{
 			gridMain.Columns.Clear();
-			// запрос данных
-			// после выполнения этой строчки presenter уже выдал необходимые данные
+
+			// 1. Запрос данных
 			LevelChanged?.Invoke(Level.Years);
 
+			// 2. Настройка вида
 			// 29-11-2019 >>>
 			// код настройки вида перенести в композитный класс, который настраивает контролы и показывает нужную панель
 			DataGridViewTextBoxColumn col1 = new DataGridViewTextBoxColumn
@@ -164,17 +182,23 @@ namespace EmployeesManager
 			gridMain.Columns.Add(col1);
 			gridMain.DataSource = bsMainGridYears;
 
+			// Показать панель тоже входит в настройку вида
+			//	Настройка вида:
+			//		- настройка сетки
+			//		- показ панели
 			showControlsManager.Show(yearsPanel);
 			// Заменить на логику смены показа IView, вложенные view
 			// Не забывать про возможность делать элементы через UserControls
 		}
-		private void navMonths()
+		private void setMonths()
 		{
 			// просто оповещать что сменился текущий год, месяц и т.д.
 			//	модель соответствеено меняет структуру текущих данных.
 			//		при запросе данных, модель сама знает что отдать
 			//		в случае веб реализации, структура текущих данных должна находиться во view
 			//			либо можно создать класс данных, относящихся к ui и находиться будет в view как логика ui
+
+
 
 			gridMain.Columns.Clear();
 			LevelChanged?.Invoke(Level.Months);
@@ -195,14 +219,14 @@ namespace EmployeesManager
 			showControlsManager.Show(monthsPanel);
 		}
 
-		void navWorkDocuments()
+		void setWorkDocuments()
 		{
 			gridMain.Columns.Clear();
 			gridMain.DataSource = null;
 			showControlsManager.Show(workDokumentsPanel);
 		}
 
-		void navWorks()
+		void setWorks()
 		{
 			gridMain.Columns.Clear();
 			gridMain.DataSource = null;
