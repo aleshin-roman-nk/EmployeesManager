@@ -5,6 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/*
+ * 
+ * 
+ * 
+ * What does this class do?
+ * 
+ * Этот класс берет в свой контейнер панели.
+ * Управляет отображением нужной панели и скрывает остальные
+ * 
+ */
+
+
 namespace EmployeesManager.Forms.MainForm.InternalUILogic
 {
 	class ShowControlsManager
@@ -28,7 +40,7 @@ namespace EmployeesManager.Forms.MainForm.InternalUILogic
 
 				item.Visible = true;
 				item.Dock = DockStyle.Fill;
-			}
+			}			
 		}
 	}
 }
