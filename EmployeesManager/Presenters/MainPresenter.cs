@@ -36,6 +36,7 @@ namespace EmployeesManager.Presenters
 
 		private void View_LevelChanged(Level obj)
 		{
+			// Мой стиль кода - этот участок долеж в специальном методе быть, для порядка кода
 			switch (obj)
 			{
 				case Level.Years:

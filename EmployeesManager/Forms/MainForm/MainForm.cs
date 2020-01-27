@@ -69,6 +69,10 @@ using System.Windows.Forms;
  * После входа в объект мы должны знать его как текущий, например для того, чтобы отображать, в каком объекте находимся. А еще лучше "Хлебную крошку текущих объектов". Т.е. весь связанный список текущих
  *	объектов.
  *	Поэтому все же нужно иметь объект информации о текущем объекте (Система пути.)
+ *	
+ *	>>>
+ *	27-12-2019
+ *	Нужно переразработать что то более серьезное чем отдельные акшион навигатор
  * 
  */
 
@@ -82,7 +86,7 @@ namespace EmployeesManager
 		BindingSource bsAddress = new BindingSource();
 
 		ActionsNavigator navigator = new ActionsNavigator();
-		ShowControlsManager showControlsManager = new ShowControlsManager();
+		ShowPanelsManager showPanelsManager = new ShowPanelsManager();
 		CurrentObjects currentObjects = new CurrentObjects();
 
 		public event Action UserCreatesYear;
@@ -94,19 +98,22 @@ namespace EmployeesManager
 		{
 			InitializeComponent();
 
-			showControlsManager.AddControlPanel(yearsPanel);
-			showControlsManager.AddControlPanel(monthsPanel);
-			showControlsManager.AddControlPanel(workDokumentsPanel);
-			showControlsManager.AddControlPanel(employeeControl1);
-
 			gridMain.AutoGenerateColumns = false;
 			gridMain.DataSource = bsMainGrid;
 
-			navigator.Add(setYears);
-			navigator.Add(setMonths);
-			navigator.Add(setWorkDocuments);
-			navigator.Add(setWorks);
-			navigator.ExecCurrent();
+			// лучше принимать не просто Control а интерфейс, который имеет контракт требований и описание что это
+			// можно как компонент, которому отдаем ссылку на grid control, он уж сам привязывается к событиям ентера
+			//	м backspace
+			showPanelsManager.AddPanel(yearsPanel);
+			showPanelsManager.AddPanel(monthsPanel);
+			showPanelsManager.AddPanel(workDokumentsPanel);
+			showPanelsManager.AddPanel(employeeControl1);
+
+			navigator.Add(activatePanelYears);
+			navigator.Add(activatePanelMonths);
+			navigator.Add(activatePanelWorkDocuments);
+			navigator.Add(activatePanelWorks);
+			navigator.TurnFirst();
 
 			bsMainGridYears.CurrentItemChanged += BsMainGridYears_CurrentItemChanged;
 			bsMainGridMonths.CurrentItemChanged += BsMainGridMonths_CurrentItemChanged;
@@ -165,8 +172,34 @@ namespace EmployeesManager
 		/*
 		 * Код выполняется, когда происходит вход в режим просмотра годов.
 		 *	Сетка конфигурирется для показа годов
+		 *	
+		 *	>>>
+		 *	14-01-2020 1-40
+		 *	Надо скомпоновать в одну сущность (*1):
+		 *		Настройка вида
+		 *		Запрос данных контроллеру (презентеру)
+		 *		Настройка привязок.
+		 *	Состояние текущих объектов (структура year.month.doc.work) хранится в этом же классе
+		 *		что и контроллирует коллекцию сущностей (*1)
+		 *	
 		 */
-		private void setYears()
+
+
+		 /*
+		  * 
+		  * >>> 19-01-2020 2-17
+		  * Можно назвать activateViewYears
+		  * Активируем view.
+		  * 
+		  * Выполняется код активации вида.
+		  * 1. Запрос данных
+		  * 2. Привязка данных
+		  * 3. Отобразить панель
+		  * 
+		  * 
+		  * 
+		  */
+		private void activatePanelYears()
 		{
 			gridMain.Columns.Clear();
 
@@ -192,11 +225,13 @@ namespace EmployeesManager
 			//	Настройка вида:
 			//		- настройка сетки
 			//		- показ панели
-			showControlsManager.Show(yearsPanel);
+			showPanelsManager.Show(yearsPanel);
 			// Заменить на логику смены показа IView, вложенные view
 			// Не забывать про возможность делать элементы через UserControls
 		}
-		private void setMonths()
+
+		// Сценарий активации
+		private void activatePanelMonths()
 		{
 			// просто оповещать что сменился текущий год, месяц и т.д.
 			//	модель соответствеено меняет структуру текущих данных.
@@ -210,6 +245,8 @@ namespace EmployeesManager
 			 *		дерево объектов не непосредственно объект модели, а объект класса ui, содержащий отмеченный объект модели
 			 */
 
+			// В принципе здесь только настройка сетки
+			// view может быть как логически объединенная единица, имеющая механизмы UI и получающая ссылки на контролы
 			gridMain.Columns.Clear();
 			LevelChanged?.Invoke(Level.Months);
 			
@@ -225,35 +262,35 @@ namespace EmployeesManager
 			gridMain.Columns.Add(col1);
 			gridMain.DataSource = bsMainGridMonths;
 
-			showControlsManager.Show(monthsPanel);
+			showPanelsManager.Show(monthsPanel);
 		}
 
-		void setWorkDocuments()
+		void activatePanelWorkDocuments()
 		{
 			gridMain.Columns.Clear();
 			gridMain.DataSource = null;
-			showControlsManager.Show(workDokumentsPanel);
+			showPanelsManager.Show(workDokumentsPanel);
 		}
 
-		void setWorks()
+		void activatePanelWorks()
 		{
 			gridMain.Columns.Clear();
 			gridMain.DataSource = null;
-			showControlsManager.Show(employeeControl1); 
+			showPanelsManager.Show(employeeControl1); 
 		}
 
 		private void DataGridView1_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Enter)
 			{
-				navigator.Next();
-				navigator.ExecCurrent();
+				navigator.TurnNext();
+				//navigator.ExecCurrent();
 				e.Handled = true;
 			}
 			else if(e.KeyCode == Keys.Back)
 			{
-				navigator.Prev();
-				navigator.ExecCurrent();
+				navigator.TurnBack();
+				//navigator.ExecCurrent();
 				e.Handled = true;
 			}
 		}

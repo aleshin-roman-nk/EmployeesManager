@@ -11,19 +11,30 @@ using System.Windows.Forms;
  * 
  * What does this class do?
  * 
- * Этот класс берет в свой контейнер панели.
- * Управляет отображением нужной панели и скрывает остальные
+ * Контейнер контролов.
+ * Включает видимость.
+ * 
  * 
  */
 
 
 namespace EmployeesManager.Forms.MainForm.InternalUILogic
 {
-	class ShowControlsManager
+	public interface IPanel
+	{
+
+	}
+
+	class Panel
+	{
+
+	}
+
+	class ShowPanelsManager
 	{
 		List<Control> controls = new List<Control>();
 
-		public void AddControlPanel(Control control)
+		public void AddPanel(Control control)
 		{
 			controls.Add(control);
 		}

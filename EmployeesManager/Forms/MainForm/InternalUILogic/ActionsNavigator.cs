@@ -17,22 +17,40 @@ namespace EmployeesManager.Forms.MainForm.InternalUILogic
 			actions.Add(a);
 		}
 
-		public void Next()
+		private void Next()
 		{
 			if (pos == actions.Count - 1) return;
 			pos++;
 		}
 
-		public void Prev()
+		private void Prev()
 		{
 			if (pos == 0) return;
 			pos--;
 		}
 
-		public void ExecCurrent()
+		private void ExecCurrent()
 		{
 			if (actions.Count == 0) return;
 			actions[pos]();
+		}
+
+		public void TurnNext()
+		{
+			Next();
+			ExecCurrent();
+		}
+
+		public void TurnBack()
+		{
+			Prev();
+			ExecCurrent();
+		}
+
+		public void TurnFirst()
+		{
+			pos = 0;
+			ExecCurrent();
 		}
 	}
 }
