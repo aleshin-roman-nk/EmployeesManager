@@ -101,6 +101,7 @@
 			// 
 			// employeeControl1
 			// 
+			this.employeeControl1.EmployeeName = "Employee";
 			this.employeeControl1.Location = new System.Drawing.Point(20, 332);
 			this.employeeControl1.Name = "employeeControl1";
 			this.employeeControl1.Size = new System.Drawing.Size(302, 277);
@@ -114,6 +115,7 @@
 			this.workDokumentsPanel.Name = "workDokumentsPanel";
 			this.workDokumentsPanel.Size = new System.Drawing.Size(190, 200);
 			this.workDokumentsPanel.TabIndex = 7;
+			this.workDokumentsPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.workDokumentsPanel_Paint);
 			// 
 			// label6
 			// 

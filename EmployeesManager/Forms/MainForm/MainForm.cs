@@ -86,7 +86,6 @@ namespace EmployeesManager
 		BindingSource bsAddress = new BindingSource();
 
 		ActionsNavigator navigator = new ActionsNavigator();
-		ShowPanelsManager showPanelsManager = new ShowPanelsManager();
 		CurrentObjects currentObjects = new CurrentObjects();
 
 		public event Action UserCreatesYear;
@@ -101,22 +100,32 @@ namespace EmployeesManager
 			gridMain.AutoGenerateColumns = false;
 			gridMain.DataSource = bsMainGrid;
 
+			bsMainGridYears.CurrentItemChanged += BsMainGridYears_CurrentItemChanged;
+			bsMainGridMonths.CurrentItemChanged += BsMainGridMonths_CurrentItemChanged;
 			// лучше принимать не просто Control а интерфейс, который имеет контракт требований и описание что это
 			// можно как компонент, которому отдаем ссылку на grid control, он уж сам привязывается к событиям ентера
 			//	м backspace
-			showPanelsManager.AddPanel(yearsPanel);
-			showPanelsManager.AddPanel(monthsPanel);
-			showPanelsManager.AddPanel(workDokumentsPanel);
-			showPanelsManager.AddPanel(employeeControl1);
-
-			navigator.Add(activatePanelYears);
-			navigator.Add(activatePanelMonths);
-			navigator.Add(activatePanelWorkDocuments);
-			navigator.Add(activatePanelWorks);
+			/*
+			 * конфигурируя можно ассоциировать showPanelsManager.AddPanel(yearsPanel); и navigator.Add(activatePanelYears);
+			 * так как вызов метода инирциализации и показать данную панель в одной операции.
+			 * 
+			 * 
+			 */
+			 /*
+			  * >>> 2-52 01-02-2020
+			  * Пусть сетка будет отдельной логической панелью
+			  * Вобщем такой подход. Пишем отдельный части механизма, затем склеиваем в единый механизм.
+			  *		Панель сетки, панели уровней. Субпанели имеют метод SetData, получают ссылку на управляющую панель (которая с сеткой)
+			  *			для предоставления ей коллекции объектов. Настраивают сетку для своего вида. Интерфейс субпанели содержит методы входа 
+			  *				и покидания данного уровня. Головной управляющий класс вызывает соответсвенно логике эти методы.
+			  * 
+			  * 
+			  */
+			navigator.Add(yearsPanel, activatePanelYears);
+			navigator.Add(monthsPanel, activatePanelMonths);
+			navigator.Add(workDokumentsPanel, activatePanelWorkDocuments);
+			navigator.Add(employeeControl1, activatePanelWorks);
 			navigator.TurnFirst();
-
-			bsMainGridYears.CurrentItemChanged += BsMainGridYears_CurrentItemChanged;
-			bsMainGridMonths.CurrentItemChanged += BsMainGridMonths_CurrentItemChanged;
 		}
 
 		public void SetEmployees(IEnumerable<UIEmployee> list)
@@ -196,11 +205,20 @@ namespace EmployeesManager
 		  * 2. Привязка данных
 		  * 3. Отобразить панель
 		  * 
-		  * 
+		  * >>> 29-01-2020 19-29
+		  * Пусть код этого метода будет инициализация view-шки
+		  * В этот метод будет передаваться ссылка на менеджер этой группы view-шек
+		  * Инициализация (сборка механизма связаной группы view-шек) можно посредством конструкции obj.Add(panel).Add(panel1)...
+		  * ------- !!!!!!!!!!!!! ВАЖНО сохранить в банк ценного опыта.
+		  * -------Мне очень важно концентрироваться на том чтобы завершить конкретно поставленную задачу и привыкнуть к такому подходу выполнения.
+		  * -------		в данный момент мне надо достич чтобы появился код механизма связанных панелей, переключающихся между собой и при переключении выполнялся код инициализации
+		  * -------			запрос данных, биндинг данных к контролам
+		  * -------  инртенсив предполагает воздержание отвлечся на другое, посмотреть ютуб, и т.д.
+		  * -------И работать над конкретным результатом.
 		  * 
 		  */
-		private void activatePanelYears()
-		{
+		private void activatePanelYears(PanelItem panel)
+		{ 
 			gridMain.Columns.Clear();
 
 			// 1. Запрос данных
@@ -221,17 +239,12 @@ namespace EmployeesManager
 			gridMain.Columns.Add(col1);
 			gridMain.DataSource = bsMainGridYears;
 
-			// Показать панель тоже входит в настройку вида
-			//	Настройка вида:
-			//		- настройка сетки
-			//		- показ панели
-			showPanelsManager.Show(yearsPanel);
 			// Заменить на логику смены показа IView, вложенные view
 			// Не забывать про возможность делать элементы через UserControls
 		}
 
 		// Сценарий активации
-		private void activatePanelMonths()
+		private void activatePanelMonths(PanelItem panel)
 		{
 			// просто оповещать что сменился текущий год, месяц и т.д.
 			//	модель соответствеено меняет структуру текущих данных.
@@ -261,22 +274,18 @@ namespace EmployeesManager
 
 			gridMain.Columns.Add(col1);
 			gridMain.DataSource = bsMainGridMonths;
-
-			showPanelsManager.Show(monthsPanel);
 		}
 
-		void activatePanelWorkDocuments()
+		void activatePanelWorkDocuments(PanelItem panel)
 		{
 			gridMain.Columns.Clear();
 			gridMain.DataSource = null;
-			showPanelsManager.Show(workDokumentsPanel);
 		}
 
-		void activatePanelWorks()
+		void activatePanelWorks(PanelItem panel)
 		{
 			gridMain.Columns.Clear();
 			gridMain.DataSource = null;
-			showPanelsManager.Show(employeeControl1); 
 		}
 
 		private void DataGridView1_KeyDown(object sender, KeyEventArgs e)
@@ -284,13 +293,11 @@ namespace EmployeesManager
 			if (e.KeyCode == Keys.Enter)
 			{
 				navigator.TurnNext();
-				//navigator.ExecCurrent();
 				e.Handled = true;
 			}
 			else if(e.KeyCode == Keys.Back)
 			{
 				navigator.TurnBack();
-				//navigator.ExecCurrent();
 				e.Handled = true;
 			}
 		}
@@ -318,6 +325,11 @@ namespace EmployeesManager
 				var r = dlg.ShowDlg();
 				return r == DialogResult.OK ? dlg.InputString : null;
 			}
+		}
+
+		private void workDokumentsPanel_Paint(object sender, PaintEventArgs e)
+		{
+
 		}
 	}
 
