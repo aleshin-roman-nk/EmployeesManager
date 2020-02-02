@@ -7,12 +7,28 @@ using System.Windows.Forms;
 
 namespace EmployeesManager.Forms.MainForm.InternalUILogic
 {
-	public class PanelItem
+	//public interface IViewPanel
+	//{
+	//	void Leave();
+	//	void Enter();
+	//}
+
+	public class PanelItem//: IViewPanel
 	{
 		public Control Panel { get; set; }
-		public Action<PanelItem> Activate { get; set; }
+		public Action<PanelItem> Enter { get; set; }
 		public int CurrentId { get; set; }
 		public BindingSource Data { get; set; }
+
+		//public void Enter()
+		//{
+			
+		//}
+
+		public void Leave()
+		{
+			//CurrentId = 
+		}
 	}
 
 	public class ActionsNavigator
@@ -22,7 +38,7 @@ namespace EmployeesManager.Forms.MainForm.InternalUILogic
 
 		public void Add(Control panel, Action<PanelItem> init)
 		{
-			panels.Add(new PanelItem { Panel = panel, Activate = init });
+			panels.Add(new PanelItem { Panel = panel, Enter = init });
 		}
 
 		private void Next()
@@ -55,12 +71,19 @@ namespace EmployeesManager.Forms.MainForm.InternalUILogic
 		private void ExecCurrent()
 		{
 			if (panels.Count == 0) return;
-			panels[pos].Activate(panels[pos]);
+			panels[pos].Enter(panels[pos]);
 			Show(panels[pos].Panel);
+		}
+
+		private void ExecLeave()
+		{
+			if (panels.Count == 0) return;
+			panels[pos].Leave();
 		}
 
 		public void TurnNext()
 		{
+			ExecLeave();
 			Next();
 			ExecCurrent();
 		}
