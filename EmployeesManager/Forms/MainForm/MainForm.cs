@@ -85,7 +85,7 @@ namespace EmployeesManager
 		BindingSource bsMainGridMonths = new BindingSource();
 		BindingSource bsAddress = new BindingSource();
 
-		ActionsNavigator navigator = new ActionsNavigator();
+		PanelsNavigator navigator = new PanelsNavigator();
 		CurrentObjects currentObjects = new CurrentObjects();
 
 		public event Action UserCreatesYear;
@@ -124,29 +124,29 @@ namespace EmployeesManager
 			  * Менеджер при смене слоя вызывает метод покидания предидущего и метод активации нового
 			  * 
 			  */
-			navigator.Add(yearsPanel, activatePanelYears);
-			navigator.Add(monthsPanel, activatePanelMonths);
-			navigator.Add(workDokumentsPanel, activatePanelWorkDocuments);
+			navigator.Add(yearsPanel1, activatePanelYears);
+			navigator.Add(monthsPanel1, activatePanelMonths);
+			navigator.Add(documentsPanel1, activatePanelWorkDocuments);
 			navigator.Add(employeeControl1, activatePanelWorks);
 			navigator.TurnFirst();
 		}
 
 		public void SetEmployees(IEnumerable<UIEmployee> list)
 		{
-			bsMainGrid.DataSource = list;
-			bsMainGrid.DataSource = typeof(UIEmployee);
-			gridMain.DataSource = bsMainGrid;
-			bsMainGrid.ResetBindings(false);
+			//bsMainGrid.DataSource = list;
+			//bsMainGrid.DataSource = typeof(UIEmployee);
+			//gridMain.DataSource = bsMainGrid;
+			//bsMainGrid.ResetBindings(false);
 
-			bsAddress.DataSource = bsMainGrid;
-			bsAddress.DataMember = "Address";
+			//bsAddress.DataSource = bsMainGrid;
+			//bsAddress.DataMember = "Address";
 
-			txtBuilding.DataBindings.Clear();
-			txtStreet.DataBindings.Clear();
-			txtFIO.DataBindings.Clear();
-			txtBuilding.DataBindings.Add("Text", bsAddress, "Building");
-			txtStreet.DataBindings.Add("Text", bsAddress, "Street");
-			txtFIO.DataBindings.Add("Text", bsMainGrid, "ShortName");
+			//txtBuilding.DataBindings.Clear();
+			//txtStreet.DataBindings.Clear();
+			//txtFIO.DataBindings.Clear();
+			//txtBuilding.DataBindings.Add("Text", bsAddress, "Building");
+			//txtStreet.DataBindings.Add("Text", bsAddress, "Street");
+			//txtFIO.DataBindings.Add("Text", bsMainGrid, "ShortName");
 		}
 		private void BsMainGridYears_CurrentItemChanged(object sender, EventArgs e)
 		{
@@ -169,7 +169,7 @@ namespace EmployeesManager
 		}
 		public void SetMonths(IEnumerable<Month> months, Month cur)
 		{
-			lblCurrentMonth.DataBindings.Clear();
+			//lblCurrentMonth.DataBindings.Clear();
 			bsMainGridMonths.DataSource = months;
 			
 			if (cur != null)
@@ -178,7 +178,7 @@ namespace EmployeesManager
 				bsMainGridMonths.Position = bsMainGridMonths.IndexOf(c);
 			}
 
-			lblCurrentMonth.DataBindings.Add("Text", bsMainGridMonths, "Name");
+			//lblCurrentMonth.DataBindings.Add("Text", bsMainGridMonths, "Name");
 		}
 
 		/*
@@ -331,6 +331,11 @@ namespace EmployeesManager
 		}
 
 		private void workDokumentsPanel_Paint(object sender, PaintEventArgs e)
+		{
+
+		}
+
+		private void MainForm_Load(object sender, EventArgs e)
 		{
 
 		}

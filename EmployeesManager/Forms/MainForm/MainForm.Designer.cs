@@ -31,34 +31,20 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.gridMain = new System.Windows.Forms.DataGridView();
-			this.employeeControl1 = new EmployeesManager.Forms.MainForm.SubElements.EmployeeControl();
-			this.workDokumentsPanel = new System.Windows.Forms.Panel();
-			this.label6 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
-			this.monthsPanel = new System.Windows.Forms.Panel();
-			this.lblCurrentMonth = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
-			this.yearsPanel = new System.Windows.Forms.Panel();
-			this.btnCreateYear = new System.Windows.Forms.Button();
-			this.label7 = new System.Windows.Forms.Label();
-			this.txtFIO = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
-			this.txtBuilding = new System.Windows.Forms.TextBox();
-			this.txtStreet = new System.Windows.Forms.TextBox();
-			this.label2 = new System.Windows.Forms.Label();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.panel2 = new System.Windows.Forms.Panel();
+			this.yearsPanel1 = new EmployeesManager.Forms.MainForm.SubElements.YearsPanel();
+			this.monthsPanel1 = new EmployeesManager.Forms.MainForm.SubElements.MonthsPanel();
+			this.documentsPanel1 = new EmployeesManager.Forms.MainForm.SubElements.DocumentsPanel();
+			this.employeeControl1 = new EmployeesManager.Forms.MainForm.SubElements.EmployeeControl();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridMain)).BeginInit();
-			this.workDokumentsPanel.SuspendLayout();
-			this.monthsPanel.SuspendLayout();
-			this.yearsPanel.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.panel2.SuspendLayout();
@@ -77,10 +63,10 @@
 			// 
 			// splitContainer1.Panel2
 			// 
+			this.splitContainer1.Panel2.Controls.Add(this.yearsPanel1);
+			this.splitContainer1.Panel2.Controls.Add(this.monthsPanel1);
+			this.splitContainer1.Panel2.Controls.Add(this.documentsPanel1);
 			this.splitContainer1.Panel2.Controls.Add(this.employeeControl1);
-			this.splitContainer1.Panel2.Controls.Add(this.workDokumentsPanel);
-			this.splitContainer1.Panel2.Controls.Add(this.monthsPanel);
-			this.splitContainer1.Panel2.Controls.Add(this.yearsPanel);
 			this.splitContainer1.Size = new System.Drawing.Size(800, 420);
 			this.splitContainer1.SplitterDistance = 345;
 			this.splitContainer1.TabIndex = 1;
@@ -98,149 +84,6 @@
 			this.gridMain.Size = new System.Drawing.Size(343, 418);
 			this.gridMain.TabIndex = 0;
 			this.gridMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DataGridView1_KeyDown);
-			// 
-			// employeeControl1
-			// 
-			this.employeeControl1.EmployeeName = "Employee";
-			this.employeeControl1.Location = new System.Drawing.Point(20, 332);
-			this.employeeControl1.Name = "employeeControl1";
-			this.employeeControl1.Size = new System.Drawing.Size(302, 277);
-			this.employeeControl1.TabIndex = 8;
-			// 
-			// workDokumentsPanel
-			// 
-			this.workDokumentsPanel.Controls.Add(this.label6);
-			this.workDokumentsPanel.Controls.Add(this.label5);
-			this.workDokumentsPanel.Location = new System.Drawing.Point(232, 7);
-			this.workDokumentsPanel.Name = "workDokumentsPanel";
-			this.workDokumentsPanel.Size = new System.Drawing.Size(190, 200);
-			this.workDokumentsPanel.TabIndex = 7;
-			this.workDokumentsPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.workDokumentsPanel_Paint);
-			// 
-			// label6
-			// 
-			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(136, 173);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(26, 13);
-			this.label6.TabIndex = 1;
-			this.label6.Text = "End";
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(15, 13);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(98, 13);
-			this.label5.TabIndex = 0;
-			this.label5.Text = "Документы работ";
-			// 
-			// monthsPanel
-			// 
-			this.monthsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.monthsPanel.Controls.Add(this.lblCurrentMonth);
-			this.monthsPanel.Controls.Add(this.label3);
-			this.monthsPanel.Location = new System.Drawing.Point(13, 5);
-			this.monthsPanel.Name = "monthsPanel";
-			this.monthsPanel.Size = new System.Drawing.Size(200, 100);
-			this.monthsPanel.TabIndex = 6;
-			// 
-			// lblCurrentMonth
-			// 
-			this.lblCurrentMonth.AutoSize = true;
-			this.lblCurrentMonth.Location = new System.Drawing.Point(11, 40);
-			this.lblCurrentMonth.Name = "lblCurrentMonth";
-			this.lblCurrentMonth.Size = new System.Drawing.Size(13, 13);
-			this.lblCurrentMonth.TabIndex = 1;
-			this.lblCurrentMonth.Text = "0";
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(11, 14);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(56, 13);
-			this.label3.TabIndex = 0;
-			this.label3.Text = "МЕСЯЦЫ";
-			// 
-			// yearsPanel
-			// 
-			this.yearsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.yearsPanel.Controls.Add(this.btnCreateYear);
-			this.yearsPanel.Controls.Add(this.label7);
-			this.yearsPanel.Controls.Add(this.txtFIO);
-			this.yearsPanel.Controls.Add(this.label1);
-			this.yearsPanel.Controls.Add(this.txtBuilding);
-			this.yearsPanel.Controls.Add(this.txtStreet);
-			this.yearsPanel.Controls.Add(this.label2);
-			this.yearsPanel.Location = new System.Drawing.Point(13, 132);
-			this.yearsPanel.Name = "yearsPanel";
-			this.yearsPanel.Size = new System.Drawing.Size(330, 173);
-			this.yearsPanel.TabIndex = 5;
-			// 
-			// btnCreateYear
-			// 
-			this.btnCreateYear.Location = new System.Drawing.Point(46, 3);
-			this.btnCreateYear.Name = "btnCreateYear";
-			this.btnCreateYear.Size = new System.Drawing.Size(115, 23);
-			this.btnCreateYear.TabIndex = 6;
-			this.btnCreateYear.Text = "Создать год";
-			this.btnCreateYear.UseVisualStyleBackColor = true;
-			this.btnCreateYear.Click += new System.EventHandler(this.BtnCreateYear_Click);
-			// 
-			// label7
-			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(3, 8);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(37, 13);
-			this.label7.TabIndex = 5;
-			this.label7.Text = "ГОДА";
-			// 
-			// txtFIO
-			// 
-			this.txtFIO.AutoSize = true;
-			this.txtFIO.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.txtFIO.Location = new System.Drawing.Point(9, 36);
-			this.txtFIO.Name = "txtFIO";
-			this.txtFIO.Size = new System.Drawing.Size(19, 20);
-			this.txtFIO.TabIndex = 4;
-			this.txtFIO.Text = "0";
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(10, 109);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(39, 13);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Улица";
-			// 
-			// txtBuilding
-			// 
-			this.txtBuilding.Location = new System.Drawing.Point(76, 80);
-			this.txtBuilding.Name = "txtBuilding";
-			this.txtBuilding.ReadOnly = true;
-			this.txtBuilding.Size = new System.Drawing.Size(203, 20);
-			this.txtBuilding.TabIndex = 3;
-			// 
-			// txtStreet
-			// 
-			this.txtStreet.Location = new System.Drawing.Point(76, 106);
-			this.txtStreet.Name = "txtStreet";
-			this.txtStreet.ReadOnly = true;
-			this.txtStreet.Size = new System.Drawing.Size(203, 20);
-			this.txtStreet.TabIndex = 1;
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(10, 83);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(30, 13);
-			this.label2.TabIndex = 2;
-			this.label2.Text = "Дом";
 			// 
 			// toolStrip1
 			// 
@@ -292,6 +135,35 @@
 			this.panel2.Size = new System.Drawing.Size(800, 420);
 			this.panel2.TabIndex = 3;
 			// 
+			// yearsPanel1
+			// 
+			this.yearsPanel1.Location = new System.Drawing.Point(183, 189);
+			this.yearsPanel1.Name = "yearsPanel1";
+			this.yearsPanel1.Size = new System.Drawing.Size(223, 202);
+			this.yearsPanel1.TabIndex = 11;
+			// 
+			// monthsPanel1
+			// 
+			this.monthsPanel1.Location = new System.Drawing.Point(236, 116);
+			this.monthsPanel1.Name = "monthsPanel1";
+			this.monthsPanel1.Size = new System.Drawing.Size(150, 150);
+			this.monthsPanel1.TabIndex = 10;
+			// 
+			// documentsPanel1
+			// 
+			this.documentsPanel1.Location = new System.Drawing.Point(18, 148);
+			this.documentsPanel1.Name = "documentsPanel1";
+			this.documentsPanel1.Size = new System.Drawing.Size(180, 133);
+			this.documentsPanel1.TabIndex = 9;
+			// 
+			// employeeControl1
+			// 
+			this.employeeControl1.EmployeeName = "Employee";
+			this.employeeControl1.Location = new System.Drawing.Point(3, 5);
+			this.employeeControl1.Name = "employeeControl1";
+			this.employeeControl1.Size = new System.Drawing.Size(195, 178);
+			this.employeeControl1.TabIndex = 8;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -301,17 +173,12 @@
 			this.Controls.Add(this.panel1);
 			this.Name = "MainForm";
 			this.Text = "0";
+			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.gridMain)).EndInit();
-			this.workDokumentsPanel.ResumeLayout(false);
-			this.workDokumentsPanel.PerformLayout();
-			this.monthsPanel.ResumeLayout(false);
-			this.monthsPanel.PerformLayout();
-			this.yearsPanel.ResumeLayout(false);
-			this.yearsPanel.PerformLayout();
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
 			this.panel1.ResumeLayout(false);
@@ -329,21 +196,10 @@
 		private System.Windows.Forms.ToolStripButton toolStripButton2;
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Panel panel2;
-		private System.Windows.Forms.TextBox txtStreet;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox txtBuilding;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label txtFIO;
-		private System.Windows.Forms.Panel yearsPanel;
-		private System.Windows.Forms.Panel monthsPanel;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Label lblCurrentMonth;
-		private System.Windows.Forms.Panel workDokumentsPanel;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Label label5;
 		private Forms.MainForm.SubElements.EmployeeControl employeeControl1;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Button btnCreateYear;
+		private Forms.MainForm.SubElements.DocumentsPanel documentsPanel1;
+		private Forms.MainForm.SubElements.YearsPanel yearsPanel1;
+		private Forms.MainForm.SubElements.MonthsPanel monthsPanel1;
 	}
 }
 

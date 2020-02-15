@@ -55,19 +55,38 @@
     <Compile Include="Forms\Dialogs\InputStringDlg.Designer.cs">
       <DependentUpon>InputStringDlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainForm\InternalUILogic\ActionsNavigator.cs" />
+    <Compile Include="Forms\MainForm\InternalUILogic\PanelsNavigator.cs" />
     <Compile Include="Forms\MainForm\InternalUILogic\CurrentObjects.cs" />
+    <Compile Include="Forms\MainForm\InternalUILogic\IViewPanel.cs" />
     <Compile Include="Forms\MainForm\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MainForm\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MainForm\SubElements\DocumentsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm\SubElements\DocumentsPanel.Designer.cs">
+      <DependentUpon>DocumentsPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm\SubElements\EmployeeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Forms\MainForm\SubElements\EmployeeControl.Designer.cs">
       <DependentUpon>EmployeeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm\SubElements\MonthsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm\SubElements\MonthsPanel.Designer.cs">
+      <DependentUpon>MonthsPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm\SubElements\YearsPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm\SubElements\YearsPanel.Designer.cs">
+      <DependentUpon>YearsPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Program.cs" />
@@ -80,8 +99,17 @@
     <EmbeddedResource Include="Forms\MainForm\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm\SubElements\DocumentsPanel.resx">
+      <DependentUpon>DocumentsPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm\SubElements\EmployeeControl.resx">
       <DependentUpon>EmployeeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm\SubElements\MonthsPanel.resx">
+      <DependentUpon>MonthsPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm\SubElements\YearsPanel.resx">
+      <DependentUpon>YearsPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

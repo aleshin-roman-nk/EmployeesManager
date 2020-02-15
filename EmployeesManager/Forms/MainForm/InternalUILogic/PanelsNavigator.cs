@@ -5,14 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/*
+ * Вообще здесь должен быть какой то роутинг.
+ * Презентер общается с IMainView
+ *	Презентер подписан на события IMainView
+ *	Презентер передает в IMainView запрошенные данные.
+ *	
+ * 
+ * 
+ */
+
 namespace EmployeesManager.Forms.MainForm.InternalUILogic
 {
-	//public interface IViewPanel
-	//{
-	//	void Leave();
-	//	void Enter();
-	//}
+	public interface IEntity
+	{
+		int Id { get; set; }
+	}
 
+	// В целом панель работает с одним типом сущности.
 	public class PanelItem//: IViewPanel
 	{
 		public Control Panel { get; set; }
@@ -31,7 +41,7 @@ namespace EmployeesManager.Forms.MainForm.InternalUILogic
 		}
 	}
 
-	public class ActionsNavigator
+	public class PanelsNavigator
 	{
 		List<PanelItem> panels = new List<PanelItem>();
 		int pos = 0;
@@ -68,14 +78,14 @@ namespace EmployeesManager.Forms.MainForm.InternalUILogic
 			}
 		}
 
-		private void ExecCurrent()
+		private void EnterCurrent()
 		{
 			if (panels.Count == 0) return;
 			panels[pos].Enter(panels[pos]);
 			Show(panels[pos].Panel);
 		}
 
-		private void ExecLeave()
+		private void LeaveCurrent()
 		{
 			if (panels.Count == 0) return;
 			panels[pos].Leave();
@@ -83,21 +93,21 @@ namespace EmployeesManager.Forms.MainForm.InternalUILogic
 
 		public void TurnNext()
 		{
-			ExecLeave();
+			LeaveCurrent();
 			Next();
-			ExecCurrent();
+			EnterCurrent();
 		}
 
 		public void TurnBack()
 		{
 			Prev();
-			ExecCurrent();
+			EnterCurrent();
 		}
 
 		public void TurnFirst()
 		{
 			pos = 0;
-			ExecCurrent();
+			EnterCurrent();
 		}
 	}
 }
