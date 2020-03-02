@@ -1,6 +1,10 @@
-﻿using EmModel.Entities;
+﻿using EmModel;
+using EmModel.DiscAccess;
+using EmModel.Entities;
 using EmModel.Models;
+using EmployeesManager.Forms.WorkForm;
 using EmployeesManager.Views;
+using PaymentOrder1C;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,86 +16,139 @@ namespace EmployeesManager.Presenters
 	public class MainPresenter
 	{
 		IMainView view;
-		EmployeesModel model;
-		YearsModel yearsModel;
-		MonthsModel monthsModel;
+		
+		WorkDocumentsModel documentsModel;
 
 		public MainPresenter(IMainView v)
 		{
 			view = v;
-			model = new EmployeesModel();
-			yearsModel = new YearsModel();
-			monthsModel = new MonthsModel();
+			documentsModel = new WorkDocumentsModel();
 
-			//view.SetEmployees(model.GetUIEmployees());
-			view.SetYears(yearsModel.Years, yearsModel.CurrentYear);
-			view.SetCurrentTitle(yearsModel.CurrentYear.Name);
+			view.BtnCreateDocument += View_BtnCreateDocument;
+			view.BtnCreateWork += View_BtnCreateWork;
+			view.DateChanged += View_DateChanged;
+			view.BtnDeleteDocument += View_BtnDeleteDocument;
+			view.BtnEditWork += View_BtnEditWork;
+			view.BtnDeleteWork += View_BtnDeleteWork;
+			view.BtnMakePayment += View_BtnMakePayment;
 
-			// Презентер подписывается (прослушивать) на запросы-события от view
-			view.UserCreatesYear += View_UserCreatesYear;
-			view.MonthSelected += View_MonthSelected;
-			view.YearSelected += View_YearSelected;
-			view.LevelChanged += View_LevelChanged;
+			var dt = DateTime.Today;
+			view.SetDocuments(documentsModel.GetDocuments(dt.Year, dt.Month));
 		}
 
-		private void View_LevelChanged(Level obj)
+		private void View_BtnMakePayment(IEnumerable<WorkDocument> obj)
 		{
-			// Мой стиль кода - этот участок долеж в специальном методе быть, для порядка кода
-			switch (obj)
+			if (obj == null) return;
+
+			var docsEx = documentsModel.GetWorkDocumentsEx(obj).ToList();
+			if (docsEx.Count == 0)
 			{
-				case Level.Years:
-					view.SetYears(yearsModel.Years, yearsModel.CurrentYear);
-					break;
-				case Level.Months:
-					view.SetMonths(monthsModel.GetMonths(yearsModel.CurrentYear), monthsModel.CurrentMonth);
-					break;
-				case Level.WorkDocuments:
-					break;
-				case Level.Works:
-					break;
-				default:
-					break;
+				view.ShowMsg("Отсутствуют документы, подходящие для оплаты");
+				return;
+			}
+
+			string fileName = view.GetFileName();
+			if (fileName == null) return;
+			
+			var payer = documentsModel.GetWorkDocumentExByFIO("Алешин Роман Владимирович");
+
+			int startNo = documentsModel.LastDocumentNo;
+			foreach (var item in obj)
+			{
+				item.No = ++startNo;
+				item.PayDocMaked = true;
+			}
+
+			string res = new Builder1C().Build(docsEx, payer, startNo).ToString();
+
+			FileReadWriter.WriteAllText(fileName, res);
+
+			documentsModel.LastDocumentNo = startNo;
+			documentsModel.SaveDocuments(obj);
+			view.SetDocuments(documentsModel.GetDocuments(view.Date.Year, view.Date.Month));
+		}
+
+		private void View_BtnCreateWork(WorkDocument wd)
+		{
+			if (wd == null) return;
+			if (!CanEditDocument(view.CurrentWorkDocument)) return;
+
+			// change to that like as View_BtnCreateDocument (view.ChooseEmployees(documentsModel.GetEmployees());)
+			// I mean that the view must contain different IView and give a method
+			// А можно и передавать при создании пачку IView в параметрах конструктора
+			IWorkForm workForm = new WorkForm();
+
+			Work w = new Work();
+
+			workForm.SetWork(w);
+			var res = workForm.GetWork();
+
+			if (res != null)
+			{
+				documentsModel.AddWork(wd, w);
+				view.SetDocuments(documentsModel.GetDocuments(view.Date.Year, view.Date.Month));
 			}
 		}
-
-		private void View_YearSelected(Year obj)
+		private void View_BtnEditWork(Work obj)
 		{
-			yearsModel.CurrentYear = obj;
-			view.SetCurrentTitle(yearsModel.CurrentYear.Name);
-		}
+			if (obj == null) return;
+			if (!CanEditDocument(view.CurrentWorkDocument)) return;
 
-		private void View_MonthSelected(Month obj)
-		{
-			monthsModel.CurrentMonth = obj;
-			view.SetCurrentTitle($"{yearsModel.CurrentYear.Name} / {obj.Name}");
-		}
+			IWorkForm workForm = new WorkForm();
 
-		// We need an other model that contains information what an year, a month current is.
-		// Может загрузить сразу всю структуру
-		//		Year.Month
-		//	А документы и работы документов подгружать по запросу.
-		// А может просто папки. Элемент-папка.
-		//		В этой папке что то содержится.
-		//
-		// >>>
-		// А можно запрашивать дай всех детей объекта Х
-		//		или дай родителя объекта Y
+			workForm.SetWork(obj.Clone());
+			var res = workForm.GetWork();
 
-		private void View_UserCreatesYear()
-		{
-			var str = view.DlgInputString;
-			if(str != null)
+			if (res != null)
 			{
-				try
-				{
-					yearsModel.CreateYear(str);
-					view.SetYears(yearsModel.Years, yearsModel.CurrentYear);
-				}
-				catch (Exception ex)
-				{
-					view.ShowMsg(ex.Message);
-				}
+				obj.Accept(res);
+				documentsModel.SaveWork(obj);
+				view.SetDocuments(documentsModel.GetDocuments(view.Date.Year, view.Date.Month));
 			}
+		}
+		private void View_BtnDeleteWork(Work obj)
+		{
+			if (obj == null) return;
+			if (!CanEditDocument(view.CurrentWorkDocument)) return;
+			if (!view.UserAnswerYes($"Работа {obj.Name} будет удалена. Подтвердите")) return;
+
+			documentsModel.DeleteWork(obj);
+
+			view.SetDocuments(documentsModel.GetDocuments(view.Date.Year, view.Date.Month));
+		}
+
+		bool CanEditDocument(WorkDocument doc)
+		{
+			if (doc.PayDocMaked)
+			{
+				view.ShowMsg($"Документ {view.CurrentWorkDocument.Title} закрыт. Изменения невозможны");
+				return false;
+			}
+			return true;
+		}
+		private void View_BtnCreateDocument()
+		{
+			var empl = view.ChooseEmployees(documentsModel.GetEmployees());
+			if (empl == null) return;
+
+			var docs = empl.Select(x => documentsModel.CreateDocument(view.Date, x));// move into the model
+			documentsModel.SaveDocuments(docs);// move into the model
+
+			view.SetDocuments(documentsModel.GetDocuments(view.Date.Year, view.Date.Month));
+		}
+
+		private void View_BtnDeleteDocument(WorkDocument obj)
+		{
+			if (obj == null) return;
+
+			if (!view.UserAnswerYes($"Документ {obj.Title} будет удален. Подтвердите")) return;
+
+			documentsModel.DeleteDocument(obj);
+			view.SetDocuments(documentsModel.GetDocuments(view.Date.Year, view.Date.Month));
+		}
+		private void View_DateChanged()
+		{
+			view.SetDocuments(documentsModel.GetDocuments(view.Date.Year, view.Date.Month));
 		}
 	}
 }

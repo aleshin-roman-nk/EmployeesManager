@@ -55,43 +55,43 @@
     <Compile Include="Forms\Dialogs\InputStringDlg.Designer.cs">
       <DependentUpon>InputStringDlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainForm\InternalUILogic\PanelsNavigator.cs" />
-    <Compile Include="Forms\MainForm\InternalUILogic\CurrentObjects.cs" />
-    <Compile Include="Forms\MainForm\InternalUILogic\IViewPanel.cs" />
+    <Compile Include="Forms\MainForm\Core\GridPanel.cs" />
+    <Compile Include="Forms\MainForm\Core\GridPanelColumn.cs" />
+    <Compile Include="Forms\MainForm\Core\IPanel.cs" />
     <Compile Include="Forms\MainForm\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MainForm\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainForm\SubElements\DocumentsPanel.cs">
+    <Compile Include="Forms\MainForm\Panels\DocumentsPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\MainForm\SubElements\DocumentsPanel.Designer.cs">
+    <Compile Include="Forms\MainForm\Panels\DocumentsPanel.Designer.cs">
       <DependentUpon>DocumentsPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainForm\SubElements\EmployeeControl.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="Forms\SelectEmployee\SelectEmployeeForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MainForm\SubElements\EmployeeControl.Designer.cs">
-      <DependentUpon>EmployeeControl.cs</DependentUpon>
+    <Compile Include="Forms\SelectEmployee\SelectEmployeeForm.Designer.cs">
+      <DependentUpon>SelectEmployeeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainForm\SubElements\MonthsPanel.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="Forms\SelectWorkTypeForm\DataSettingsForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MainForm\SubElements\MonthsPanel.Designer.cs">
-      <DependentUpon>MonthsPanel.cs</DependentUpon>
+    <Compile Include="Forms\SelectWorkTypeForm\DataSettingsForm.Designer.cs">
+      <DependentUpon>DataSettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainForm\SubElements\YearsPanel.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="Forms\WorkForm\WorkForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\MainForm\SubElements\YearsPanel.Designer.cs">
-      <DependentUpon>YearsPanel.cs</DependentUpon>
+    <Compile Include="Forms\WorkForm\WorkForm.Designer.cs">
+      <DependentUpon>WorkForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Thoughts.cs" />
+    <Compile Include="Views\IDataSettingsView.cs" />
     <Compile Include="Views\IMainView.cs" />
     <EmbeddedResource Include="Forms\Dialogs\InputStringDlg.resx">
       <DependentUpon>InputStringDlg.cs</DependentUpon>
@@ -99,17 +99,17 @@
     <EmbeddedResource Include="Forms\MainForm\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MainForm\SubElements\DocumentsPanel.resx">
+    <EmbeddedResource Include="Forms\MainForm\Panels\DocumentsPanel.resx">
       <DependentUpon>DocumentsPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MainForm\SubElements\EmployeeControl.resx">
-      <DependentUpon>EmployeeControl.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\SelectEmployee\SelectEmployeeForm.resx">
+      <DependentUpon>SelectEmployeeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MainForm\SubElements\MonthsPanel.resx">
-      <DependentUpon>MonthsPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\SelectWorkTypeForm\DataSettingsForm.resx">
+      <DependentUpon>DataSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MainForm\SubElements\YearsPanel.resx">
-      <DependentUpon>YearsPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\WorkForm\WorkForm.resx">
+      <DependentUpon>WorkForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -119,6 +119,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -158,6 +159,18 @@
     <PackageReference Include="System.Data.SQLite.Linq">
       <Version>1.0.112</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-yard-work-48 edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-create-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-delete-bin-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-request-money-24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,5 +14,28 @@ namespace EmModel.Entities
 		public string BankCorrAcc { get; set; }
 		public string Accaunt { get; set; }
 		public string BIK { get; set; }
+		public void FromBank(Bank bank)
+		{
+			BankName = bank.Name;
+			BankCorrAcc = bank.CorrAcc;
+			BIK = bank.BIK;
+		}
+		public BankAcc Clone()
+		{
+			return new BankAcc
+			{
+				BankName = BankName,
+				BankCorrAcc = BankCorrAcc,
+				Accaunt = Accaunt,
+				BIK = BIK
+			};
+		}
+		public void Accept(BankAcc src)
+		{
+			BankName = src.BankName;
+			BankCorrAcc = src.BankCorrAcc;
+			Accaunt = src.Accaunt;
+			BIK = src.BIK;
+		}
 	}
 }

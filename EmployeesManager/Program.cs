@@ -19,8 +19,8 @@ namespace EmployeesManager
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 
-
 			MainForm v = new MainForm();
+
 			MainPresenter presenter = new MainPresenter(v);
 
 			Application.Run(v);

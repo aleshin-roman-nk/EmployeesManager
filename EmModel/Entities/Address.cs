@@ -15,5 +15,24 @@ namespace EmModel.Entities
 		public string Street { get; set; }
 		public string Building { get; set; }
 		public string Apartment { get; set; }
+		public Address Clone()
+		{
+			return new Address
+			{
+				Postcode = Postcode,
+				City = City,
+				Street = Street,
+				Building = Building,
+				Apartment = Apartment
+			};
+		}
+		public void Accept(Address src)
+		{
+			City = src.City;
+			Postcode = src.Postcode;
+			Street = src.Street;
+			Building = src.Building;
+			Apartment = src.Apartment;
+		}
 	}
 }
