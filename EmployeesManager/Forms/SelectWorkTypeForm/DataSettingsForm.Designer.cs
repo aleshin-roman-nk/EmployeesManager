@@ -37,7 +37,7 @@
 			this.listBox1.FormattingEnabled = true;
 			this.listBox1.ItemHeight = 19;
 			this.listBox1.Location = new System.Drawing.Point(13, 48);
-			this.listBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.listBox1.Margin = new System.Windows.Forms.Padding(4);
 			this.listBox1.Name = "listBox1";
 			this.listBox1.Size = new System.Drawing.Size(414, 289);
 			this.listBox1.TabIndex = 0;
@@ -45,9 +45,9 @@
 			// textBox1
 			// 
 			this.textBox1.Location = new System.Drawing.Point(13, 13);
-			this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.textBox1.Margin = new System.Windows.Forms.Padding(4);
 			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(148, 27);
+			this.textBox1.Size = new System.Drawing.Size(414, 27);
 			this.textBox1.TabIndex = 1;
 			// 
 			// DataSettingsForm
@@ -58,7 +58,7 @@
 			this.Controls.Add(this.textBox1);
 			this.Controls.Add(this.listBox1);
 			this.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "DataSettingsForm";
 			this.Text = "SelectWorkTypeForm";
 			this.ResumeLayout(false);

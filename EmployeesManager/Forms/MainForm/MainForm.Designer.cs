@@ -83,7 +83,7 @@
 			this.gridMain.Name = "gridMain";
 			this.gridMain.RowHeadersVisible = false;
 			this.gridMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.gridMain.Size = new System.Drawing.Size(542, 496);
+			this.gridMain.Size = new System.Drawing.Size(653, 496);
 			this.gridMain.TabIndex = 0;
 			this.gridMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridMain_KeyDown);
 			// 
@@ -191,11 +191,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.gridWorks.BackgroundColor = System.Drawing.Color.Silver;
 			this.gridWorks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.gridWorks.Location = new System.Drawing.Point(548, 32);
+			this.gridWorks.Location = new System.Drawing.Point(659, 32);
 			this.gridWorks.Name = "gridWorks";
 			this.gridWorks.ReadOnly = true;
 			this.gridWorks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.gridWorks.Size = new System.Drawing.Size(767, 496);
+			this.gridWorks.Size = new System.Drawing.Size(656, 496);
 			this.gridWorks.TabIndex = 1;
 			this.gridWorks.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gridWorks_KeyDown);
 			// 
@@ -203,7 +203,7 @@
 			// 
 			this.txtEmployeeFIO.AutoSize = true;
 			this.txtEmployeeFIO.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.txtEmployeeFIO.Location = new System.Drawing.Point(544, 10);
+			this.txtEmployeeFIO.Location = new System.Drawing.Point(655, 10);
 			this.txtEmployeeFIO.Name = "txtEmployeeFIO";
 			this.txtEmployeeFIO.Size = new System.Drawing.Size(39, 19);
 			this.txtEmployeeFIO.TabIndex = 2;

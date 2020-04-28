@@ -56,7 +56,7 @@ namespace EmployeesManager.Forms.SelectEmployee
 			return res == DialogResult.OK ? bsMain.Current as Employee : null;
 		}
 
-		public IEnumerable<GridPanelColumn> DocumentColumns
+		private IEnumerable<GridPanelColumn> DocumentColumns
 		{
 			get
 			{

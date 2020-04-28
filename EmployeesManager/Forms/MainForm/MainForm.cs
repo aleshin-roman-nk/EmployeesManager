@@ -3,6 +3,7 @@ using EmModel.Entities;
 using EmModel.Entities.UI;
 using EmployeesManager.Forms.Dialogs;
 using EmployeesManager.Forms.SelectEmployee;
+using EmployeesManager.Forms.WorkForm;
 using EmployeesManager.Views;
 using System;
 using System.Collections.Generic;
@@ -219,6 +220,13 @@ namespace EmployeesManager
 
 				return DialogResult.OK == sfd.ShowDialog() ? sfd.FileName : null;
 			}
+		}
+		public Work EditWork(Work src)
+		{
+			IWorkForm workForm = new WorkForm();
+
+			workForm.SetWork(src);
+			return workForm.GetWork();
 		}
 	}
 }

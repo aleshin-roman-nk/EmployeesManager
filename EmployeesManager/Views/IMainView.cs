@@ -25,6 +25,7 @@ namespace EmployeesManager.Views
 		void SetWorks(IEnumerable<Work> works);
 		Employee ChooseEmployee(IEnumerable<Employee> empls);
 		IEnumerable<Employee> ChooseEmployees(IEnumerable<Employee> empls);
+		Work EditWork(Work src);
 		string GetFileName();
 		Work CurrentWork { get; }
 		WorkDocument CurrentWorkDocument { get; }

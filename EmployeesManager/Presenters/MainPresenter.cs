@@ -4,6 +4,7 @@ using EmModel.Entities;
 using EmModel.Models;
 using EmployeesManager.Forms.WorkForm;
 using EmployeesManager.Views;
+using MonthTasksBank;
 using PaymentOrder1C;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,15 @@ namespace EmployeesManager.Presenters
 			view.BtnMakePayment += View_BtnMakePayment;
 
 			var dt = DateTime.Today;
-			view.SetDocuments(documentsModel.GetDocuments(dt.Year, dt.Month));
+
+			try
+			{
+				view.SetDocuments(documentsModel.GetDocuments(dt.Year, dt.Month));
+			}
+			catch (Exception ex)
+			{
+				LOG_CLASS.Log(ex.Message);
+			}
 		}
 
 		private void View_BtnMakePayment(IEnumerable<WorkDocument> obj)
@@ -53,17 +62,20 @@ namespace EmployeesManager.Presenters
 			var payer = documentsModel.GetWorkDocumentExByFIO("Алешин Роман Владимирович");
 
 			int startNo = documentsModel.LastDocumentNo;
+			int startPayDocNo = documentsModel.LastPayDocNo;
 			foreach (var item in obj)
 			{
 				item.No = ++startNo;
 				item.PayDocMaked = true;
 			}
 
-			string res = new Builder1C().Build(docsEx, payer, startNo).ToString();
+			string res = new Builder1C().Build(docsEx, payer, startPayDocNo).ToString();
+			startPayDocNo += obj.Count();
 
-			FileReadWriter.WriteAllText(fileName, res);
+			FileReadWriter.WriteAllTextANSI(fileName, res);
 
 			documentsModel.LastDocumentNo = startNo;
+			documentsModel.LastPayDocNo = startPayDocNo;
 			documentsModel.SaveDocuments(obj);
 			view.SetDocuments(documentsModel.GetDocuments(view.Date.Year, view.Date.Month));
 		}
@@ -77,6 +89,11 @@ namespace EmployeesManager.Presenters
 			// I mean that the view must contain different IView and give a method
 			// А можно и передавать при создании пачку IView в параметрах конструктора
 			IWorkForm workForm = new WorkForm();
+			workForm.BtnStartChooseWorkPosition = () => {
+				// Вариант спрятать IWorkForm в IMainView. 
+				MonthTaskBankPresenter taskBankPresenter = new MonthTaskBankPresenter();
+				taskBankPresenter.Go();
+			};
 
 			Work w = new Work();
 

@@ -13,5 +13,9 @@ namespace EmModel.DiscAccess
 		{
 			File.WriteAllText(filename, body, Encoding.UTF8);
 		}
+		public static void WriteAllTextANSI(string filename, string body)
+		{
+			File.WriteAllText(filename, body, Encoding.Default);
+		}
 	}
 }

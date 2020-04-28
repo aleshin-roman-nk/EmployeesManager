@@ -1,4 +1,5 @@
-﻿using EmployeesManager.Presenters;
+﻿using EmModel;
+using EmployeesManager.Presenters;
 using EmployeesManager.Views;
 using System;
 using System.Collections.Generic;
@@ -22,8 +23,8 @@ namespace EmployeesManager
 			MainForm v = new MainForm();
 
 			MainPresenter presenter = new MainPresenter(v);
-
-			Application.Run(v);
+			
+			Application.Run(v);			
 		}
 	}
 }

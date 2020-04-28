@@ -17,7 +17,7 @@ namespace PaymentOrder1C
 			foreach (var doc in documents)
 			{
 				//Add(payer, pr, DocNo, pr.Sum?.ToString("f2").Replace(',', '.'), DateTime.Today.ToShortDateString());
-				Add(doc, payer);
+				Add(doc, payer, ++firstNo);
 			}
 
 			return this;
@@ -33,13 +33,13 @@ namespace PaymentOrder1C
 		}
 		private List<PayDocument> PayDocList { get; set; } = new List<PayDocument>();
 
-		private void Add(WorkDocumentEx receiver, WorkDocumentEx payer)
+		private void Add(WorkDocumentEx receiver, WorkDocumentEx payer, int docNo)
 		{
 			PayDocument pd = new PayDocument();
 
 			var sum = receiver.WorkDocument.TotalSum.ToString("f2").Replace(',', '.');
 
-			pd.SetValue(PayDocumentValues.Number, "");
+			pd.SetValue(PayDocumentValues.Number, docNo.ToString());
 			pd.SetValue(PayDocumentValues.Date, DateTime.Today.ToShortDateString());
 			pd.SetValue(PayDocumentValues.Sum, sum);
 			pd.SetValue(PayDocumentValues.PayerAccount, payer.BankAcc.Accaunt);

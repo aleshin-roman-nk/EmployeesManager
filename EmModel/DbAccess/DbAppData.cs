@@ -1,4 +1,5 @@
-﻿using EmModel.Entities;
+﻿using EmModel.BLTaskBank.Entities;
+using EmModel.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,7 +14,6 @@ namespace EmModel.DbAccess
 		public DbAppData(string cn = @"Data Source = ..\..\..\db\data.db") : base(cn)
 		//public DbAppData(string cn = @"Data Source = data.db") : base(cn)
 		{
-
 		}
 
 		public DbSet<Employee> Employees { get; set; }
@@ -24,5 +24,6 @@ namespace EmModel.DbAccess
 		public DbSet<WorkDocument> WorkDocuments { get; set; }
 		public DbSet<Work> Works { get; set; }
 		public DbSet<Variable> Variables { get; set; }
+		public DbSet<MonthWorkPosition> MonthWorkPositions { get; set; }
 	}
 }

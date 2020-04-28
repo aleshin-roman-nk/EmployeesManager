@@ -149,5 +149,22 @@ namespace EmModel.Models
 				configs.Save();
 			}
 		}
+		public int LastPayDocNo
+		{
+			get
+			{
+				ConfigsModel configs = new ConfigsModel();
+				configs.Load();
+				var prop = configs.Variables.LastPayDocNo;
+				return string.IsNullOrEmpty(prop) ? 0 : int.Parse(prop);
+			}
+			set
+			{
+				ConfigsModel configs = new ConfigsModel();
+				configs.Load();
+				configs.Variables.LastPayDocNo = value.ToString();
+				configs.Save();
+			}
+		}
 	}
 }

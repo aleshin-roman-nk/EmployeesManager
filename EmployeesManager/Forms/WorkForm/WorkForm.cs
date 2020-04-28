@@ -15,6 +15,7 @@ namespace EmployeesManager.Forms.WorkForm
 	{
 		void SetWork(Work work);
 		Work GetWork();
+		Action BtnStartChooseWorkPosition { get; set; }
 	}
 
 	public partial class WorkForm : Form, IWorkForm
@@ -25,6 +26,9 @@ namespace EmployeesManager.Forms.WorkForm
 		{
 			InitializeComponent();
 		}
+
+		public Action BtnStartChooseWorkPosition { get; set; }
+
 		public Work GetWork()
 		{
 			this.ShowDialog();
@@ -43,6 +47,11 @@ namespace EmployeesManager.Forms.WorkForm
 			txtPrice.DataBindings.Add("Text", w, "Price");
 			txtWorkName.DataBindings.Add("Text", w, "Name");
 			txtSum.DataBindings.Add("Text", w, "Sum");
+		}
+
+		private void btnChangePosition_Click(object sender, EventArgs e)
+		{
+			BtnStartChooseWorkPosition?.Invoke();
 		}
 		//private void txtValormetrocubico_KeyPress(object sender, KeyPressEventArgs e)
 		//{

@@ -13,7 +13,7 @@ namespace EmModel.Entities
 		public int? EmployeeId { get; set; }
 		public Employee Employee { get; set; }
 		public DateTime Date { get; set; }
-		public string Title { get { return $"N{No} / {Date.ToString("yyyy.MM.dd")}  / {Employee.ShortName}"; } }
+		public string Title { get { return $"N{No} / {Date.ToString("yyyy.MM.dd")}  / {Employee.FullName}"; } }
 		public List<Work> Works { get; set; } = new List<Work>();
 		public decimal TotalSum
 		{
