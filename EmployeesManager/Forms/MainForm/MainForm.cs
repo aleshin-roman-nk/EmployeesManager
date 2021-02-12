@@ -23,6 +23,8 @@ namespace EmployeesManager
 		BindingSource bsGridWorks = new BindingSource();
 		GridPanel smartGrid;
 
+		IEnumerable<WorkDocument> documents = null;
+
 		public event Action BtnCreateDocument;
 		public event Action DateChanged;
 		public event Action EmployeeSelected;
@@ -76,7 +78,31 @@ namespace EmployeesManager
 
         public void SetDocuments(IEnumerable<WorkDocument> docs)
         {
-			bsGridDocuments.DataSource = docs;
+			documents = docs;
+
+			displayDocuments(documents, checkBoxPayedDocs.Checked);
+
+			//bsGridDocuments.DataSource = docs;
+			//bsGridWorks.DataSource = bsGridDocuments;
+			//bsGridWorks.DataMember = "Works";
+
+			//gridWorks.DataSource = bsGridWorks;
+
+			//smartGrid.DetachAll();
+			//smartGrid.Attach(bsGridDocuments, DocumentColumns);
+
+
+		}
+
+		private void displayDocuments(IEnumerable<WorkDocument> docs, bool showAll)
+		{
+			IEnumerable<WorkDocument> items;
+
+			if (!showAll)
+				items = docs.Where(x => !x.PayDocMaked).ToList();
+			else items = docs;
+
+			bsGridDocuments.DataSource = items;
 			bsGridWorks.DataSource = bsGridDocuments;
 			bsGridWorks.DataMember = "Works";
 
@@ -85,6 +111,7 @@ namespace EmployeesManager
 			smartGrid.DetachAll();
 			smartGrid.Attach(bsGridDocuments, DocumentColumns);
 		}
+
 		public Employee ChooseEmployee(IEnumerable<Employee> empls)
 		{
 			ISelectEmployeeForm form = new SelectEmployeeForm();
@@ -227,6 +254,11 @@ namespace EmployeesManager
 
 			workForm.SetWork(src);
 			return workForm.GetWork();
+		}
+
+		private void checkBoxShowAllDocs_CheckedChanged(object sender, EventArgs e)
+		{
+			displayDocuments(documents, checkBoxPayedDocs.Checked);
 		}
 	}
 }
