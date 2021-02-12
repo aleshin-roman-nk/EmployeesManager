@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeesEditor", "Employee
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonthTasksBank", "MonthTasksBank\MonthTasksBank.csproj", "{30BB64BC-5AD7-4AEE-87C0-11323C3A4D5C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocBuild", "DocBuilder\DocBuild\DocBuild.csproj", "{26E47C3C-B7E9-431E-A7DD-32EF54A11523}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{30BB64BC-5AD7-4AEE-87C0-11323C3A4D5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30BB64BC-5AD7-4AEE-87C0-11323C3A4D5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30BB64BC-5AD7-4AEE-87C0-11323C3A4D5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26E47C3C-B7E9-431E-A7DD-32EF54A11523}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26E47C3C-B7E9-431E-A7DD-32EF54A11523}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26E47C3C-B7E9-431E-A7DD-32EF54A11523}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26E47C3C-B7E9-431E-A7DD-32EF54A11523}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
